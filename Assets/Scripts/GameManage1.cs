@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -10,11 +10,14 @@ public class GameManage1 : MonoBehaviour {
     private static List<Countries> unchosenCountry;
     private Countries currentCountry;
 
-
-    [SerializeField]
-    private float timeBetweenQuestions = 1f;
     [SerializeField]
     private Text stepText;
+
+    [SerializeField]
+    public Text playersMoney;
+
+    [SerializeField]
+    private Text playersGems;
     [SerializeField]
     private Text firstName;
     [SerializeField]
@@ -33,7 +36,8 @@ public class GameManage1 : MonoBehaviour {
     private Text eighthName;
 
     private int step = 1;
-
+    public int money = 1000000;
+    public int gems = 10;
     public void Start()
     {
         if (unchosenCountry == null || unchosenCountry.Count == 0)
@@ -42,6 +46,26 @@ public class GameManage1 : MonoBehaviour {
         }
         SetCountryName();
 
+    }
+    public void Update()
+    {
+        if (money >= 0)
+        {
+            SetPlayersMoney();
+
+        }else{
+            SceneManager.LoadScene("MenuScene");
+            Debug.Log("No money, You lose");
+        }
+        SetPlayersGems();
+    }
+
+    void SetPlayersMoney(){
+        playersMoney.text = money.ToString() + "$";
+    }
+    void SetPlayersGems()
+    {
+        playersGems.text = gems.ToString();
     }
     void SetCountryName()
     {

@@ -1,0 +1,2 @@
+/Users/a1/Desktop/UnityProjects/HardToWin/obj/Debug/Assembly-CSharp.csprojResolveAssemblyReference.cache
+/Users/a1/Desktop/UnityProjects/HardToWin/obj/Debug/Assembly-CSharp.csproj.CoreCompileInputs.cache
