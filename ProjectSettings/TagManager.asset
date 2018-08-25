@@ -6,6 +6,10 @@ TagManager:
   tags:
   - MaterialButtonLayer
   - MaterialText
+  - BuildMenu
+  - PlayerCountryMenu
+  - EntireMap
+  - PlayerCountryButton
   layers:
   - Default
   - TransparentFX

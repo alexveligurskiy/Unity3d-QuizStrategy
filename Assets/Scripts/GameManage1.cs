@@ -1,4 +1,4 @@
-﻿
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -14,81 +14,78 @@ public class GameManage1 : MonoBehaviour {
     private Text stepText;
 
     [SerializeField]
+    private Text FinalScore;
+
+    [SerializeField]
     public Text playersMoney;
 
     [SerializeField]
-    private Text playersGems;
-    [SerializeField]
-    private Text firstName;
-    [SerializeField]
-    private Text secondName;
-    [SerializeField]
-    private Text thirdName;
-    [SerializeField]
-    private Text fourthName;
-    [SerializeField]
-    private Text fifthName;
-    [SerializeField]
-    private Text sixthName;
-    [SerializeField]
-    private Text seventhName;
-    [SerializeField]
-    private Text eighthName;
+    public Text playersEarnings;
 
-    private int step = 1;
-    public int money = 1000000;
-    public int gems = 10;
-    public void Start()
-    {
-        if (unchosenCountry == null || unchosenCountry.Count == 0)
-        {
+    [SerializeField]
+    private float timeBetween = 5f;
+
+    [SerializeField]
+    private Text playersGems;
+
+    [SerializeField]
+    private Text armyForce;
+
+
+    [SerializeField]
+    public GameObject CountriesList;
+
+
+    public int step = 1;
+    public float money = 0;
+    public float gems = 10;
+    public float earningsPerStep;
+    public int force = 0;
+    public int forcePerStep = 2;
+    public void Start(){
+        if (unchosenCountry == null || unchosenCountry.Count == 0){
             unchosenCountry = countries.ToList<Countries>();
         }
-        SetCountryName();
 
+        SetPlayer();
     }
-    public void Update()
-    {
-        if (money >= 0)
-        {
-            SetPlayersMoney();
-
-        }else{
-            SceneManager.LoadScene("MenuScene");
-            Debug.Log("No money, You lose");
-        }
-        SetPlayersGems();
-    }
-
-    void SetPlayersMoney(){
-        playersMoney.text = money.ToString() + "$";
-    }
-    void SetPlayersGems()
-    {
-        playersGems.text = gems.ToString();
-    }
-    void SetCountryName()
-    {
-        firstName.text = unchosenCountry[0].country;
-        secondName.text = unchosenCountry[1].country;
-        thirdName.text = unchosenCountry[2].country;
-        fourthName.text = unchosenCountry[3].country;
-        fifthName.text = unchosenCountry[4].country;
-        sixthName.text = unchosenCountry[5].country;
-        seventhName.text = unchosenCountry[6].country;
-        eighthName.text = unchosenCountry[7].country;
-
-    }
-    void SetRandomCountryName(){
-        int randomQuestionIndex = Random.Range(0, unchosenCountry.Count);
-        currentCountry = unchosenCountry[randomQuestionIndex];
-    }
-
-    public void UserPushedButton()
-    {
+   
+    IEnumerator TransitionToNextQuestion() {
         
-        step++;
-        stepText.text = "Step: " + step;
+        Debug.Log("time Start");
+        yield return new WaitForSeconds(timeBetween);
+        Debug.Log("time left");
 
     }
+    public void SetPlayer(){
+        if (money > 0) {
+            playersMoney.text = money.ToString() + "$";
+            playersEarnings.text = "Your earnings per step: " + earningsPerStep.ToString() + "$  ";
+            playersGems.text = gems.ToString();
+            armyForce.text = "Force: " + force.ToString();
+        }else{
+            PlayerLosed();
+        }
+    }
+   
+    public void UserPushedButton(){
+        CountriesList strana = CountriesList.GetComponent<CountriesList>();
+        strana.CountriesForcePlus();
+
+
+
+        money += earningsPerStep;
+        force += forcePerStep;
+        SetPlayer();
+        step++;
+        stepText.text = step.ToString();
+
+        //set in player losed
+        FinalScore.text = "Your score is :" + step;
+    }
+    public void PlayerLosed(){
+        Debug.Log("You Losed!!!");
+
+    }
+
 }
