@@ -104,7 +104,7 @@ public class CountriesList : MonoBehaviour {
         } 
             
             
-        Debug.Log("relation ++");
+
         
         AddCountryName();
         int randomCountries = Random.Range(0, countries.Count);
@@ -114,6 +114,7 @@ public class CountriesList : MonoBehaviour {
         RemoveQuestion();
     }
     public void UserSelectNo() {
+        
         if (currentCountry == 1){
             Country item = countries[0];
             item.relationship -= 1;
@@ -132,8 +133,11 @@ public class CountriesList : MonoBehaviour {
         }else if (currentCountry == 6) {
             Country item = countries[5];
             item.relationship -= 1;
-        } 
+        }
+        AddCountryName();
+        Debug.Log("relation --");
 
+        objectGm.GetComponent<GameManage1>().SetPlayer();
         RemoveQuestion();
     }
     public void RemoveQuestion() {

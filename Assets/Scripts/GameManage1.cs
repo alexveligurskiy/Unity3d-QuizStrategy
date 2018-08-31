@@ -22,8 +22,7 @@ public class GameManage1 : MonoBehaviour {
     [SerializeField]
     public Text playersEarnings;
 
-    [SerializeField]
-    private float timeBetween = 5f;
+   
 
     [SerializeField]
     private Text playersGems;
@@ -34,7 +33,8 @@ public class GameManage1 : MonoBehaviour {
 
     [SerializeField]
     public GameObject CountriesList;
-
+    public ContentmentManager contentmentManager;
+    public GameObject endGameMenu;
 
     public int step = 1;
     public float money = 0;
@@ -50,13 +50,7 @@ public class GameManage1 : MonoBehaviour {
         SetPlayer();
     }
    
-    IEnumerator TransitionToNextQuestion() {
-        
-        Debug.Log("time Start");
-        yield return new WaitForSeconds(timeBetween);
-        Debug.Log("time left");
 
-    }
     public void SetPlayer(){
         if (money > 0) {
             playersMoney.text = money.ToString() + "$";
@@ -64,6 +58,11 @@ public class GameManage1 : MonoBehaviour {
             playersGems.text = gems.ToString();
             armyForce.text = "Force: " + force.ToString();
         }else{
+            
+        }
+        if (contentmentManager.ecologyCount == 0 || contentmentManager.scienceCount == 0 || contentmentManager.armyCount == 0 || contentmentManager.peopleCount == 0) {
+            PlayerLosed();
+        }else if(contentmentManager.ecologyCount == 20 || contentmentManager.scienceCount == 20 || contentmentManager.armyCount == 20 || contentmentManager.peopleCount == 20){
             PlayerLosed();
         }
     }
@@ -77,6 +76,8 @@ public class GameManage1 : MonoBehaviour {
         money += earningsPerStep;
         force += forcePerStep;
         SetPlayer();
+
+
         step++;
         stepText.text = step.ToString();
 
@@ -85,6 +86,7 @@ public class GameManage1 : MonoBehaviour {
     }
     public void PlayerLosed(){
         Debug.Log("You Losed!!!");
+        endGameMenu.SetActive(true);
 
     }
 

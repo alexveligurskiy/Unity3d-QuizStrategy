@@ -1,6 +1,6 @@
 iOS
 PlayerPath?
-/Users/a1/Desktop/HardToWin/FirstBuildIos
+/Users/a1/Desktop/HardToWinBuilds/FirstBuildIos/FirstBuildIos
 SceneListBegin?
 Assets/Scenes/GameScene.unity
 SceneListEnd?
